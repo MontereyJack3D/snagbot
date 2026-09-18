@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "SnagBot Auto-Buy Assist",
+  "version": "0.1.0",
+  "description": "Watches Amazon/Walmart/Target product pages in YOUR logged-in browser, auto-adds to cart on restock, and jumps to checkout. Always stops before placing the order.",
+  "permissions": ["storage", "alarms", "tabs", "scripting", "notifications"],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.walmart.com/*",
+    "https://*.target.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "https://*.vercel.app/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "SnagBot" },
+  "icons": { "128": "icon128.png" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.walmart.com/*",
+        "https://*.target.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

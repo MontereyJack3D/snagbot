@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root { color-scheme: dark; }
+      body {
+        width: 320px; margin: 0; padding: 14px;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #14161d; color: #e7e9ee;
+      }
+      h1 { font-size: 15px; margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+      .logo { width: 22px; height: 22px; border-radius: 6px; background: #22c55e; color: #000;
+        font-weight: 900; display: grid; place-items: center; }
+      .sub { color: #9aa0ad; font-size: 11px; margin: 0 0 12px; }
+      label { display: block; font-size: 11px; color: #9aa0ad; margin: 10px 0 3px; }
+      input[type="text"], input[type="number"] {
+        width: 100%; box-sizing: border-box; background: #1b1e27; border: 1px solid #262a35;
+        color: #e7e9ee; border-radius: 8px; padding: 8px; font-size: 13px;
+      }
+      .row { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 12px; }
+      button {
+        width: 100%; margin-top: 12px; background: #22c55e; color: #000; border: 0;
+        border-radius: 8px; padding: 10px; font-weight: 700; font-size: 13px; cursor: pointer;
+      }
+      button.secondary { background: #1b1e27; color: #e7e9ee; border: 1px solid #262a35; }
+      .safety { margin-top: 12px; font-size: 11px; color: #9aa0ad; background: #16351f;
+        border: 1px solid #22c55e44; border-radius: 8px; padding: 8px; line-height: 1.4; }
+      .targets { margin-top: 12px; }
+      .t { border: 1px solid #262a35; border-radius: 8px; padding: 8px; margin-bottom: 6px; font-size: 12px; }
+      .t .title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .pill { font-size: 10px; padding: 1px 6px; border-radius: 999px; }
+      .in { background: #16351f; color: #22c55e; }
+      .out { background: #20242e; color: #9aa0ad; }
+      .status { font-size: 11px; color: #9aa0ad; margin-top: 8px; }
+      a { color: #22c55e; }
+    </style>
+  </head>
+  <body>
+    <h1><span class="logo">S</span> SnagBot</h1>
+    <p class="sub">Auto-buy assist · runs in your browser</p>
+
+    <label>SnagBot app URL</label>
+    <input id="apiBase" type="text" placeholder="http://localhost:3000" />
+
+    <label>Re-check every (seconds)</label>
+    <input id="pollSeconds" type="number" min="15" />
+
+    <div class="row">
+      <span>Auto-open tabs to monitor while away</span>
+      <input id="autoOpenTabs" type="checkbox" />
+    </div>
+    <div class="row">
+      <span>Extension enabled</span>
+      <input id="enabled" type="checkbox" />
+    </div>
+
+    <button id="save">Save</button>
+    <button id="refresh" class="secondary">Sync armed items now</button>
+
+    <div class="targets" id="targets"></div>
+
+    <div class="safety">
+      🔒 SnagBot adds to cart and opens checkout — <b>you</b> click the final “Place order.”
+      It never enters payment details and never solves CAPTCHAs.
+    </div>
+    <div class="status" id="status"></div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
