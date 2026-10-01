@@ -10,6 +10,8 @@ async function load() {
   $("pollSeconds").value = cfg.pollSeconds;
   $("autoOpenTabs").checked = !!cfg.autoOpenTabs;
   $("enabled").checked = cfg.enabled !== false;
+  $("autoPlaceOrder").checked = !!cfg.autoPlaceOrder;
+  $("placeOrderCountdown").value = cfg.placeOrderCountdown ?? 6;
   await renderTargets();
 }
 
@@ -49,6 +51,8 @@ $("save").addEventListener("click", async () => {
       pollSeconds: Math.max(15, Number($("pollSeconds").value) || 45),
       autoOpenTabs: $("autoOpenTabs").checked,
       enabled: $("enabled").checked,
+      autoPlaceOrder: $("autoPlaceOrder").checked,
+      placeOrderCountdown: Math.min(60, Math.max(2, Number($("placeOrderCountdown").value) || 6)),
     },
   });
   $("status").textContent = "Saved.";

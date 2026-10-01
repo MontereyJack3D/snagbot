@@ -16,6 +16,11 @@ const DEFAULTS = {
   pollSeconds: 45,
   autoOpenTabs: false, // if true, open background tabs for armed items to monitor while away
   enabled: true,
+  // AUTO-PLACE-ORDER: when true, armed items don't just land at checkout — the
+  // extension clicks the final "Place order" too, after a countdown you can
+  // abort, and only if the order total is within the item's price cap.
+  autoPlaceOrder: false,
+  placeOrderCountdown: 6, // seconds of abortable countdown before the final click
 };
 
 async function getConfig() {
@@ -55,6 +60,19 @@ async function reportStatus(id, status, price) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status, ...(typeof price === "number" ? { lastPrice: price } : {}) }),
+    });
+  } catch {
+    /* app may be offline; ignore */
+  }
+}
+
+async function reportEvent(id, message) {
+  const cfg = await getConfig();
+  try {
+    await fetch(`${cfg.apiBase}/api/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ watchId: id, message, type: "auto_buy_started" }),
     });
   } catch {
     /* app may be offline; ignore */
@@ -134,6 +152,10 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         break;
       case "reportStatus":
         await reportStatus(msg.id, msg.status, msg.price);
+        sendResponse({ ok: true });
+        break;
+      case "reportEvent":
+        await reportEvent(msg.id, msg.message);
         sendResponse({ ok: true });
         break;
       case "pollNow":

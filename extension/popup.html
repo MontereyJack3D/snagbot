@@ -55,14 +55,31 @@
       <input id="enabled" type="checkbox" />
     </div>
 
+    <div class="danger" style="margin-top:12px;border:1px solid #ef444455;background:#2a1414;border-radius:8px;padding:10px">
+      <label class="row" style="margin-top:0">
+        <span style="font-weight:700;color:#ffb4b4">⚡ Auto-place-order</span>
+        <input id="autoPlaceOrder" type="checkbox" />
+      </label>
+      <p style="font-size:11px;color:#d99;margin:6px 0 0;line-height:1.4">
+        When ON, armed items are bought automatically: added to cart → checkout →
+        <b>final order placed for you</b>, after a countdown you can cancel, and only
+        if the total is within that item's price cap. Uses the payment already saved
+        in your retailer account.
+      </p>
+      <label style="display:block;font-size:11px;color:#d99;margin-top:8px">Countdown before it clicks (seconds)</label>
+      <input id="placeOrderCountdown" type="number" min="2" max="60"
+        style="width:100%;box-sizing:border-box;background:#1b1e27;border:1px solid #262a35;color:#e7e9ee;border-radius:8px;padding:8px;font-size:13px;margin-top:3px" />
+    </div>
+
     <button id="save">Save</button>
     <button id="refresh" class="secondary">Sync armed items now</button>
 
     <div class="targets" id="targets"></div>
 
     <div class="safety">
-      🔒 SnagBot adds to cart and opens checkout — <b>you</b> click the final “Place order.”
-      It never enters payment details and never solves CAPTCHAs.
+      🔒 SnagBot never solves CAPTCHAs, spoofs your browser, or types your card. With
+      Auto-place-order OFF it stops at checkout for you; ON, it clicks the final button
+      itself (abortable countdown + price cap). A CAPTCHA at checkout always pauses it.
     </div>
     <div class="status" id="status"></div>
 
